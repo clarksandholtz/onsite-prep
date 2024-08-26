@@ -1,9 +1,20 @@
 import { useState } from "react";
-import "./App.css";
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 import { httpBatchLink } from "@trpc/client";
 import { trpc } from "./trpc";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import Home from "./Home";
+import Home from "./screens/Home/Home";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme, CssBaseline } from "@mui/material";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 function App() {
   const [queryClient] = useState(() => new QueryClient());
@@ -20,7 +31,10 @@ function App() {
   return (
     <trpc.Provider client={trpcClient} queryClient={queryClient}>
       <QueryClientProvider client={queryClient}>
-        <Home />
+        <ThemeProvider theme={darkTheme}>
+          <CssBaseline />
+          <Home />
+        </ThemeProvider>
       </QueryClientProvider>
     </trpc.Provider>
   );
